@@ -1,4 +1,6 @@
-﻿namespace UniModules.UniGame.RemoteData.RemoteData
+﻿using UniModules.UniGame.Core.Runtime.Common;
+
+namespace UniModules.UniGame.RemoteData.RemoteData
 {
     using System;
     using System.Collections.Generic;
@@ -9,7 +11,7 @@
     using MutableObject;
     using UniCore.Runtime.DataFlow;
 
-    public abstract class RemoteObjectHandler<T> : IDisposable, ILifeTimeContext
+    public abstract class RemoteObjectHandler<T> : IDisposableLifetimeContext
     {
         public object DeleteValueObject { get; }
         public T Object { get; protected set; }
