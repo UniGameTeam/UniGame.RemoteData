@@ -100,14 +100,14 @@
         /// <summary>
         /// Создает Reactive Property для работы с оборачиваемыми данными
         /// </summary>
-        /// <typeparam name="Tvalue">Тип обрабатываемого поля</typeparam>
+        /// <typeparam name="TValue">Тип обрабатываемого поля</typeparam>
         /// <param name="getter"></param>
         /// <param name="setter"></param>
         /// <param name="fieldName">Имя поля</param>
         /// <returns></returns>
-        public MutableObjectReactiveProperty<Tvalue> CreateReactiveProperty<Tvalue>(Func<Tvalue> getter, Action<Tvalue> setter, string fieldName)
+        public MutableObjectReactiveProperty<TValue> CreateReactiveProperty<TValue>(Func<TValue> getter, Action<TValue> setter, string fieldName)
         {
-            var property = new MutableObjectReactiveProperty<Tvalue>(getter, setter, this);
+            var property = new MutableObjectReactiveProperty<TValue>(getter, setter, this);
             _properties.Add(fieldName, property);
             return property;
         }
