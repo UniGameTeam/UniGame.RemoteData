@@ -8,11 +8,11 @@ namespace UniModules.UniGame.RemoteData.MutableObject
     using System.Linq;
     using System.Threading.Tasks;
     using RemoteData;
-    using UniModules.UniCore.Runtime.ObjectPool.Runtime;
+    using UniCore.Runtime.ObjectPool.Runtime;
     using UniRx;
     using UniTask = Cysharp.Threading.Tasks.UniTask;
 
-    public class BaseMutableRemoteObjectFacade<T> : IRemoteChangesStorage where T : class
+    public class BaseMutableReactiveRemoteObjectFacade<T> : IReactiveRemoteObject<T> where T : class
     {
         public ReactiveProperty<bool> HaveNewChanges { get; } = new ReactiveProperty<bool>(false);
 
@@ -24,7 +24,7 @@ namespace UniModules.UniGame.RemoteData.MutableObject
 
         private Dictionary<string, IMutableChildBase> _childObjects;
 
-        public BaseMutableRemoteObjectFacade(RemoteObjectHandler<T> objectHandler)
+        public BaseMutableReactiveRemoteObjectFacade(RemoteObjectHandler<T> objectHandler)
         {
             _objectHandler = objectHandler;
             _pendingChanges = new ConcurrentStack<RemoteDataChange>();
@@ -53,6 +53,11 @@ namespace UniModules.UniGame.RemoteData.MutableObject
             var change = _objectHandler.CreateChange(childName, newData);
             change.ApplyCallback = ApplyChangeOnLocalHandler;
             AddChange(change);
+        }
+
+        public virtual IReactiveRemoteObject<T> Bind(RemoteObjectHandler<T> objectHandler)
+        {
+            return this;
         }
 
         public void AddChange(RemoteDataChange change)
