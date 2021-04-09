@@ -1,4 +1,6 @@
-﻿namespace UniModules.UniGame.RemoteData.MutableObject
+﻿using UniModules.UniCore.Runtime.ObjectPool.Runtime.Extensions;
+
+namespace UniModules.UniGame.RemoteData.MutableObject
 {
     using System;
     using System.Collections.Concurrent;
@@ -35,9 +37,8 @@
         /// </summary>
         /// <param name="initialDataProvider"></param>
         /// <returns></returns>
-        public async Task LoadRootData(Func<T> initialDataProvider = null)
+        public async UniTask LoadRootData(Func<T> initialDataProvider = null)
         {
-
             await _objectHandler.LoadData(initialDataProvider);
             AllPropertiesChanged();
         }
@@ -69,19 +70,21 @@
         /// <returns></returns>
         public async Task CommitChanges()
         {
-            var updateTasks = ClassPool.SpawnOrCreate<List<UniTask>>(()=>new List<UniTask>());
-            List<RemoteDataChange> changes;
+            var changes = ClassPool.SpawnOrCreate(()=>new List<RemoteDataChange>());
+
             lock (_pendingChanges)
             {
-                changes = _pendingChanges.ToList();
-                changes.Reverse();
+                changes.AddRange(_pendingChanges);
                 _pendingChanges.Clear();
                 HaveNewChanges.Value = false;
             }
 
+            changes.Reverse();
+            
             await _objectHandler.ApplyChangesBatched(changes);
+            
             changes.ForEach((ch) => ch.Dispose());
-            changes.Clear();
+            changes.Despawn();
         }
 
         /// <summary>
