@@ -11,7 +11,7 @@ namespace UniModules.UniGame.RemoteData.RemoteData
     using MutableObject;
     using UniCore.Runtime.DataFlow;
 
-    public abstract class RemoteObjectHandler<T> : IDisposableLifetimeContext
+    public abstract class RemoteObjectHandler<T> : IRemoteObjectHandler<T>
     {
         public object DeleteValueObject { get; }
         public T Object { get; protected set; }

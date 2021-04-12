@@ -12,26 +12,23 @@ namespace UniModules.UniGame.RemoteData.MutableObject
     using UniRx;
     using UniTask = Cysharp.Threading.Tasks.UniTask;
 
-    public class BaseMutableReactiveRemoteObjectFacade<T> : IReactiveRemoteObject<T> where T : class
+    public class BaseMutableReactiveRemoteObjectFacade<T> : 
+        IReactiveRemoteObject<T> where T : class
     {
         public ReactiveProperty<bool> HaveNewChanges { get; } = new ReactiveProperty<bool>(false);
 
-        protected RemoteObjectHandler<T> _objectHandler;
+        protected IRemoteObjectHandler<T> _objectHandler;
+        private ConcurrentStack<RemoteDataChange> _pendingChanges = new ConcurrentStack<RemoteDataChange>();
+        private Dictionary<string, INotifyable> _properties = new Dictionary<string, INotifyable>(8);
+        private Dictionary<string, IMutableChildBase> _childObjects = new Dictionary<string, IMutableChildBase>(8);
 
-        private ConcurrentStack<RemoteDataChange> _pendingChanges;
-
-        private Dictionary<string, INotifyable> _properties;
-
-        private Dictionary<string, IMutableChildBase> _childObjects;
-
-        public BaseMutableReactiveRemoteObjectFacade(RemoteObjectHandler<T> objectHandler)
+        public IReactiveRemoteObject<T> BindToSource(IRemoteObjectHandler<T> objectHandler)
         {
             _objectHandler = objectHandler;
-            _pendingChanges = new ConcurrentStack<RemoteDataChange>();
-            _properties = new Dictionary<string, INotifyable>();
-            _childObjects = new Dictionary<string, IMutableChildBase>();
+            OnBindToSource(_objectHandler);
+            return this;
         }
-
+        
         /// <summary>
         /// Loads remote data. if not exits sets initialValue
         /// </summary>
@@ -53,11 +50,6 @@ namespace UniModules.UniGame.RemoteData.MutableObject
             var change = _objectHandler.CreateChange(childName, newData);
             change.ApplyCallback = ApplyChangeOnLocalHandler;
             AddChange(change);
-        }
-
-        public virtual IReactiveRemoteObject<T> Bind(RemoteObjectHandler<T> objectHandler)
-        {
-            return this;
         }
 
         public void AddChange(RemoteDataChange change)
@@ -135,6 +127,14 @@ namespace UniModules.UniGame.RemoteData.MutableObject
             return _objectHandler.GetFullPath() + objectName + RemoteObjectsProvider.PathDelimeter;
         }
 
+        
+        #region private methods
+
+        protected virtual void OnBindToSource(IRemoteObjectHandler<T> objectHandler)
+        {
+            
+        }
+        
         protected void PropertyChanged(string name)
         {
             if (_properties.ContainsKey(name))
@@ -157,5 +157,6 @@ namespace UniModules.UniGame.RemoteData.MutableObject
             _objectHandler.ApplyChangeLocal(change);
             PropertyChanged(change.FieldName);
         }
+        #endregion
     }
 }
