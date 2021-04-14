@@ -3,18 +3,12 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Linq;
     using Firebase.Firestore;
     using UniRx;
 
     public class MutableDictionary<TValue> : MutableChild<IDictionary<string, TValue>>, IReactiveDictionary<string, TValue>
     {
         private readonly object _fieldDeleteObject;
-
-        public MutableDictionary(Func<IDictionary<string, TValue>> getter, string fullPath, IRemoteChangesStorage storage, object fieldDeleteObject) : base(getter, fullPath, storage)
-        {
-            _fieldDeleteObject = fieldDeleteObject;
-        }
 
         private Subject<DictionaryAddEvent<string, TValue>> _addObserver = new Subject<DictionaryAddEvent<string, TValue>>();
         private Subject<DictionaryReplaceEvent<string, TValue>> _replaceObserver = new Subject<DictionaryReplaceEvent<string, TValue>>();

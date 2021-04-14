@@ -7,28 +7,34 @@
     using RemoteData;
     using UniRx;
 
-    public class MutableChild<T> : IMutableChildBase
+    public class MutableChild<T> : IMutableChild<T>
     {
         private static Dictionary<string, FieldInfo> _fieldInfoCache = new Dictionary<string, FieldInfo>();
         private static Dictionary<string, PropertyInfo> _propertyInfoCache = new Dictionary<string, PropertyInfo>();
 
-        private readonly Func<T> _getter;
+        private Func<T> _getter;
         protected IRemoteChangesStorage _storage;
-        private readonly Dictionary<string, INotifyable> _properties;
-        private Dictionary<string, IMutableChildBase> _childObjects;
+        
+        private readonly Dictionary<string, INotifyable> _properties = new Dictionary<string, INotifyable>(8);
+        private readonly Dictionary<string, IMutableChildBase> _childObjects = new Dictionary<string, IMutableChildBase>(8);
 
         public ReactiveProperty<bool> HaveNewChanges => _storage.HaveNewChanges;
+
         protected T Object => _getter();
 
-        public MutableChild(Func<T> getter, string fullPath, IRemoteChangesStorage storage)
+        public IMutableChild<T> BindToSource(Func<T> getter, string fullPath, IRemoteChangesStorage storage)
         {
             _getter = getter;
-            FullPath = fullPath;
             _storage = storage;
-            _properties = new Dictionary<string, INotifyable>();
-            _childObjects = new Dictionary<string, IMutableChildBase>();
+            
+            FullPath = fullPath;
+            
+            _properties.Clear();
+            _childObjects.Clear();
+            
+            return OnBindToSource();
         }
-
+        
         public string FullPath { get; private set; }
 
         public void UpdateChildData(string fieldName, object newValue)
@@ -40,6 +46,11 @@
                 ApplyChangeLocal));
         }
 
+        protected virtual IMutableChild<T> OnBindToSource()
+        {
+            return this;
+        }
+        
         private void ApplyChangeLocal(RemoteDataChange change)
         {
             SetValueChangeValue(change);

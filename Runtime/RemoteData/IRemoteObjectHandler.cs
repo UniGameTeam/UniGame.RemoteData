@@ -9,6 +9,7 @@ namespace UniModules.UniGame.RemoteData.RemoteData
     public interface IRemoteObjectHandler<T> : IDisposableLifetimeContext
     {
         object DeleteValueObject { get; }
+        
         T Object { get; }
         
         UniTask<RemoteObjectHandler<T>> LoadData(Func<T> initialDataProvider = null);
