@@ -1,0 +1,22 @@
+{
+    "name": "unigame.remotedata.editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:2796129a6c23eb84a8181f62bf7332f1",
+        "GUID:d56d8d1e941ad6e4b94706ddeb3c1e5b",
+        "GUID:8e4577c9194c10845984cf27eb974fd1",
+        "GUID:47336d8c547834e4e926518cb45a846d",
+        "GUID:e2349f7eccf7c47429847b3bbd0c9bff"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

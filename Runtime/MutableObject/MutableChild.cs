@@ -9,16 +9,19 @@
 
     public class MutableChild<T> : IMutableChild<T>
     {
-        private static Dictionary<string, FieldInfo> _fieldInfoCache = new Dictionary<string, FieldInfo>();
-        private static Dictionary<string, PropertyInfo> _propertyInfoCache = new Dictionary<string, PropertyInfo>();
-
-        private Func<T> _getter;
-        protected IRemoteChangesStorage _storage;
+        private const string PathFormat = "{0}{1}";
+        
+        private static Dictionary<string, FieldInfo> _fieldInfoCache = new Dictionary<string, FieldInfo>(8);
+        private static Dictionary<string, PropertyInfo> _propertyInfoCache = new Dictionary<string, PropertyInfo>(8);
         
         private readonly Dictionary<string, INotifyable> _properties = new Dictionary<string, INotifyable>(8);
         private readonly Dictionary<string, IMutableChildBase> _childObjects = new Dictionary<string, IMutableChildBase>(8);
 
-        public ReactiveProperty<bool> HaveNewChanges => _storage.HaveNewChanges;
+        private Func<T> _getter;
+        protected IRemoteChangesStorage _storage;
+        
+
+        public IReactiveProperty<bool> HaveNewChanges => _storage.HaveNewChanges;
 
         protected T Object => _getter();
 
@@ -46,10 +49,7 @@
                 ApplyChangeLocal));
         }
 
-        protected virtual IMutableChild<T> OnBindToSource()
-        {
-            return this;
-        }
+        protected virtual IMutableChild<T> OnBindToSource() => this;
         
         private void ApplyChangeLocal(RemoteDataChange change)
         {

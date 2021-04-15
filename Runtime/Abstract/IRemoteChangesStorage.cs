@@ -8,6 +8,6 @@
         void AddChange(RemoteDataChange change);
         bool IsRootLoaded();
         Task CommitChanges();
-        ReactiveProperty<bool> HaveNewChanges { get; }
+        IReactiveProperty<bool> HaveNewChanges { get; }
     }
 }
