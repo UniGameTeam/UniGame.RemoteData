@@ -7,14 +7,8 @@
 
     public class MutableList<T> : MutableChild<List<T>>, IReactiveCollection<T>
     {
-        private ReactiveCommand<CollectionReplaceEvent<T>> _replaceObservable;
-        private ReactiveCommand<CollectionAddEvent<T>> _addObservable;
-
-        public MutableList(Func<List<T>> getter, string fullPath, IRemoteChangesStorage storage) : base(getter, fullPath, storage)
-        {
-            _replaceObservable = new ReactiveCommand<CollectionReplaceEvent<T>>();
-            _addObservable = new ReactiveCommand<CollectionAddEvent<T>>();
-        }
+        private ReactiveCommand<CollectionReplaceEvent<T>> _replaceObservable = new ReactiveCommand<CollectionReplaceEvent<T>>();
+        private ReactiveCommand<CollectionAddEvent<T>> _addObservable = new ReactiveCommand<CollectionAddEvent<T>>();
 
         public T this[int index] { get => Object[index]; set => AddUpdateChange(index, value); }
 

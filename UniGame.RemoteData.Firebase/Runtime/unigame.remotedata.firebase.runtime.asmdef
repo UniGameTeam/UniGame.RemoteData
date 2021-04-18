@@ -1,0 +1,19 @@
+{
+    "name": "unigame.remotedata.firebase.runtime",
+    "rootNamespace": "UniGame.RemoteData.FirebaseModule",
+    "references": [
+        "GUID:d56d8d1e941ad6e4b94706ddeb3c1e5b",
+        "GUID:8e4577c9194c10845984cf27eb974fd1",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:560b04d1a97f54a4e82edc0cbbb69285"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -8,6 +8,7 @@ namespace UniModules.UniGame.RemoteData.RemoteData
         IDisposable
     {
         RemoteObjectHandler<T> GetRemoteObject<T>(string path);
+        
         string GetIdForNewObject(string path);
     }
 }

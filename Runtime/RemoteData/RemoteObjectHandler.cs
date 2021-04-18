@@ -11,9 +11,10 @@ namespace UniModules.UniGame.RemoteData.RemoteData
     using MutableObject;
     using UniCore.Runtime.DataFlow;
 
-    public abstract class RemoteObjectHandler<T> : IDisposableLifetimeContext
+    public abstract class RemoteObjectHandler<T> : IRemoteObjectHandler<T>
     {
         public object DeleteValueObject { get; }
+        
         public T Object { get; protected set; }
 
         public ILifeTime LifeTime => _lifeTime;
@@ -79,6 +80,8 @@ namespace UniModules.UniGame.RemoteData.RemoteData
             }
         }
 
+        #region abstract methods
+        
         public abstract string GetDataId();
 
         public abstract string GetFullPath();
@@ -86,5 +89,7 @@ namespace UniModules.UniGame.RemoteData.RemoteData
         protected abstract UniTask ApplyChangeRemote(RemoteDataChange change);
 
         public abstract UniTask ClearData();
+        
+        #endregion
     }
 }

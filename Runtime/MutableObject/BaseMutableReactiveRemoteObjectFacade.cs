@@ -1,4 +1,6 @@
-﻿namespace UniModules.UniGame.RemoteData.MutableObject
+﻿using UniModules.UniCore.Runtime.ObjectPool.Runtime.Extensions;
+
+namespace UniModules.UniGame.RemoteData.MutableObject
 {
     using System;
     using System.Collections.Concurrent;
@@ -6,38 +8,37 @@
     using System.Linq;
     using System.Threading.Tasks;
     using RemoteData;
-    using UniModules.UniCore.Runtime.ObjectPool.Runtime;
+    using UniCore.Runtime.ObjectPool.Runtime;
     using UniRx;
     using UniTask = Cysharp.Threading.Tasks.UniTask;
 
-    public class BaseMutableRemoteObjectFacade<T> : IRemoteChangesStorage where T : class
+    public class BaseMutableReactiveRemoteObjectFacade<T> : 
+        IReactiveRemoteObject<T> where T : class
     {
-        public ReactiveProperty<bool> HaveNewChanges { get; } = new ReactiveProperty<bool>(false);
 
-        protected RemoteObjectHandler<T> _objectHandler;
+        protected IRemoteObjectHandler<T> _objectHandler;
+        
+        private ConcurrentStack<RemoteDataChange> _pendingChanges = new ConcurrentStack<RemoteDataChange>();
+        private Dictionary<string, INotifyable> _properties = new Dictionary<string, INotifyable>(8);
+        private Dictionary<string, IRemoteChangesStorage> _childObjects = new Dictionary<string, IRemoteChangesStorage>(8);
 
-        private ConcurrentStack<RemoteDataChange> _pendingChanges;
+        public IReactiveProperty<bool> HaveNewChanges { get; } = new ReactiveProperty<bool>(false);
 
-        private Dictionary<string, INotifyable> _properties;
-
-        private Dictionary<string, IMutableChildBase> _childObjects;
-
-        public BaseMutableRemoteObjectFacade(RemoteObjectHandler<T> objectHandler)
+        
+        public IReactiveRemoteObject<T> BindToSource(IRemoteObjectHandler<T> objectHandler)
         {
             _objectHandler = objectHandler;
-            _pendingChanges = new ConcurrentStack<RemoteDataChange>();
-            _properties = new Dictionary<string, INotifyable>();
-            _childObjects = new Dictionary<string, IMutableChildBase>();
+            OnBindToSource(_objectHandler);
+            return this;
         }
-
+        
         /// <summary>
         /// Loads remote data. if not exits sets initialValue
         /// </summary>
         /// <param name="initialDataProvider"></param>
         /// <returns></returns>
-        public async Task LoadRootData(Func<T> initialDataProvider = null)
+        public async UniTask LoadRootData(Func<T> initialDataProvider = null)
         {
-
             await _objectHandler.LoadData(initialDataProvider);
             AllPropertiesChanged();
         }
@@ -69,19 +70,21 @@
         /// <returns></returns>
         public async Task CommitChanges()
         {
-            var updateTasks = ClassPool.SpawnOrCreate<List<UniTask>>(()=>new List<UniTask>());
-            List<RemoteDataChange> changes;
+            var changes = ClassPool.SpawnOrCreate(()=>new List<RemoteDataChange>());
+
             lock (_pendingChanges)
             {
-                changes = _pendingChanges.ToList();
-                changes.Reverse();
+                changes.AddRange(_pendingChanges);
                 _pendingChanges.Clear();
                 HaveNewChanges.Value = false;
             }
 
+            changes.Reverse();
+            
             await _objectHandler.ApplyChangesBatched(changes);
+            
             changes.ForEach((ch) => ch.Dispose());
-            changes.Clear();
+            changes.Despawn();
         }
 
         /// <summary>
@@ -112,7 +115,7 @@
             return property;
         }
 
-        public void RegisterMutableChild(string childName, IMutableChildBase child)
+        public void RegisterMutableChild(string childName, IRemoteChangesStorage child)
         {
             _childObjects.Add(childName, child);
         }
@@ -127,6 +130,14 @@
             return _objectHandler.GetFullPath() + objectName + RemoteObjectsProvider.PathDelimeter;
         }
 
+        
+        #region private methods
+
+        protected virtual void OnBindToSource(IRemoteObjectHandler<T> objectHandler)
+        {
+            
+        }
+        
         protected void PropertyChanged(string name)
         {
             if (_properties.ContainsKey(name))
@@ -149,5 +160,6 @@
             _objectHandler.ApplyChangeLocal(change);
             PropertyChanged(change.FieldName);
         }
+        #endregion
     }
 }
