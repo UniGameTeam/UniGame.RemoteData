@@ -14,7 +14,7 @@
     "analytics"
   ],
   "dependencies": {
-    "com.unigame.coremodules": "2021.0.2",
+	"com.unigame.coremodules": "2021.0.3",
     "com.unigame.newtonsoft.json-for-unity": "2020.0.1",
     "com.google.firebase.firestore": "7.1.0"
   }
