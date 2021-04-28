@@ -2,7 +2,7 @@
   "name": "com.unigame.remotedata.firebasemodule",
   "displayName": "UniGame User Data",
   "description": "Firebase support for RemoteData ",
-  "version": "2020.0.22",
+  "version": "2020.0.23",
   "unity": "2019.2",
   "license": "MIT",
   "author": "UniGameTeam",
@@ -15,8 +15,8 @@
     "firebase"
   ],
   "dependencies": {
-    "com.unigame.userdata": "2020.1.11",
-    "com.unigame.coremodules": "2021.1.5",
+    "com.unigame.userdata": "2020.1.12",
+    "com.unigame.coremodules": "2021.1.6",
     "com.unigame.newtonsoft.json-for-unity": "2020.0.1",
     "com.google.firebase.firestore": "7.1.0"
   }
