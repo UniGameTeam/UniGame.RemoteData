@@ -193,7 +193,7 @@ namespace RemoteData.Editor.Generator
         
         private void CreateScript(ScriptData scriptData)
         {
-            var path = $"{RuntimePath.CombinePath(scriptData.Name)}.cs";
+            var path = $"{RuntimePath.CombinePath(scriptData.Name)}_generated.cs";
             var result = scriptData.CreateScript(path);
             if (result)
             {
