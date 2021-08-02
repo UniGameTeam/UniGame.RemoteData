@@ -15,15 +15,13 @@ namespace UniModules.UniGame.RemoteData.MutableObject
     public class BaseMutableReactiveRemoteObjectFacade<T> : 
         IReactiveRemoteObject<T> where T : class
     {
-
-        protected IRemoteObjectHandler<T> _objectHandler;
-        
         private ConcurrentStack<RemoteDataChange> _pendingChanges = new ConcurrentStack<RemoteDataChange>();
         private Dictionary<string, INotifyable> _properties = new Dictionary<string, INotifyable>(8);
         private Dictionary<string, IRemoteChangesStorage> _childObjects = new Dictionary<string, IRemoteChangesStorage>(8);
 
-        public IReactiveProperty<bool> HaveNewChanges { get; } = new ReactiveProperty<bool>(false);
+        protected IRemoteObjectHandler<T> _objectHandler;
 
+        public IReactiveProperty<bool> HaveNewChanges { get; } = new ReactiveProperty<bool>(false);
         
         public IReactiveRemoteObject<T> BindToSource(IRemoteObjectHandler<T> objectHandler)
         {
@@ -43,10 +41,7 @@ namespace UniModules.UniGame.RemoteData.MutableObject
             AllPropertiesChanged();
         }
 
-        public string GetId()
-        {
-            return _objectHandler.GetDataId();
-        }
+        public string GetId() => _objectHandler.GetDataId();
 
         public void UpdateChildData(string childName, object newData)
         {

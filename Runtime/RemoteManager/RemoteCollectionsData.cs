@@ -6,6 +6,9 @@ using UnityEngine;
 namespace UniModules.UniGame.RemoteData.Runtime.RemoteManager
 {
     [CreateAssetMenu(menuName = "UniGame/RemoteData/RemoteCollections",fileName = nameof(RemoteCollectionsData))]
+#if ODIN_INSPECTOR
+    [Sirenix.OdinInspector.InlineEditor]
+#endif
     public class RemoteCollectionsData : ScriptableObject, IRemoteCollectionsData
     {
 
@@ -13,8 +16,7 @@ namespace UniModules.UniGame.RemoteData.Runtime.RemoteManager
         [Sirenix.OdinInspector.InlineProperty]
 #endif
         public List<RemoteCollectionsInfo> remoteCollections = new List<RemoteCollectionsInfo>();
-
-
+        
         public IEnumerable<string> CollectionsIds
         {
             get

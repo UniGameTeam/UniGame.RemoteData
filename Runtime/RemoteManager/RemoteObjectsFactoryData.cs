@@ -8,14 +8,15 @@ using UnityEngine;
 
 namespace UniModules.UniGame.RemoteData.Runtime.RemoteManager
 {
-    [CreateAssetMenu(menuName = "UniGame/RemoteData/RemoteObjectsFactoryAsset",fileName = nameof(RemoteObjectsFactoryData))]
-    public class RemoteObjectsFactoryData : LifetimeScriptableObject, IReactiveRemoteObjectFactory
+    [CreateAssetMenu(menuName = "UniGame/RemoteData/RemoteObjectsFactoryData", fileName = nameof(RemoteObjectsFactoryData))]
+    public class RemoteObjectsFactoryData : ScriptableObject,IReactiveRemoteObjectFactory
     {
 #if ODIN_INSPECTOR
         [Sirenix.OdinInspector.InlineProperty]
         [Sirenix.OdinInspector.HideLabel]
 #endif
-        public ReactiveRemoteObjectFactory objectFactory = new ReactiveRemoteObjectFactory();
+        [SerializeReference]
+        public IReactiveRemoteObjectFactory objectFactory = new ReactiveRemoteObjectFactory();
 
         public async UniTask<IReactiveRemoteObject<T>> Create<T>(IRemoteObjectHandler<T> dataHandler) where T : class
         {
