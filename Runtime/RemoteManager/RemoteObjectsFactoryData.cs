@@ -4,6 +4,7 @@ using UniModules.UniGame.Core.Runtime.ScriptableObjects;
 using UniModules.UniGame.RemoteData.MutableObject;
 using UniModules.UniGame.RemoteData.RemoteData;
 using UniModules.UniGame.RemoteData.Runtime.RemoteManager.Abstract;
+using UniModules.UniGame.UniGame;
 using UnityEngine;
 
 namespace UniModules.UniGame.RemoteData.Runtime.RemoteManager
@@ -27,5 +28,12 @@ namespace UniModules.UniGame.RemoteData.Runtime.RemoteManager
         {
             return await objectFactory.Create(dataHandler,defaultValue);
         }
+
+
+        public void OnValidate()
+        {
+            if(objectFactory is IVerifiable verifiable) verifiable.Verify();
+        }
+        
     }
 }

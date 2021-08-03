@@ -19,7 +19,7 @@ namespace UniModules.UniGame.RemoteData.Runtime.RemoteManager.FirebaseRemote
             _authorizationService = authorizationService;
             _remoteObjectsProvider = remoteObjectsProvider;
             
-            
+            Complete();
         }
         
         public IReadOnlyReactiveProperty<string> UserId => _authorizationService.UserId;

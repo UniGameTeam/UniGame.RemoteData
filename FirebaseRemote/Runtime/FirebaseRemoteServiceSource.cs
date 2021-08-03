@@ -1,17 +1,13 @@
-using UniGame.UniNodes.GameFlow.Runtime;
-
 namespace UniModules.UniGame.RemoteData.Runtime.RemoteManager.FirebaseRemote
 {
-    using System;
+    using UniModules.UniGame.AddressableTools.Runtime.Attributes;
+    using UniGame;
     using Cysharp.Threading.Tasks;
     using UniModules.UniGame.AddressableTools.Runtime.Extensions;
     using UniModules.UniGame.Core.Runtime.Interfaces;
     using UniModules.UniGame.CoreModules.UniGame.Context.Runtime.Extension;
-    using MutableObject;
-    using RemoteData;
     using Abstract;
     using UniModules.UniGameFlow.GameFlow.Runtime.Services;
-    using UniRx;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
     
@@ -26,11 +22,8 @@ namespace UniModules.UniGame.RemoteData.Runtime.RemoteManager.FirebaseRemote
 
         public AssetReferenceT<RemoteCollectionsData>  remoteCollectionsData;
 
-#if ODIN_INSPECTOR
-        [Sirenix.OdinInspector.InlineEditor()]
-        [Sirenix.OdinInspector.HideLabel]
-#endif
-        public RemoteObjectsFactoryData remoteObjectsFactory;
+        [SerializeReference]
+        public IReactiveRemoteObjectFactory remoteObjectFactory = new ReactiveRemoteObjectFactory();
 
         #endregion
 
@@ -40,14 +33,15 @@ namespace UniModules.UniGame.RemoteData.Runtime.RemoteManager.FirebaseRemote
         
         protected override async UniTask<IFirebaseRemoteDataService> CreateServiceInternalAsync(IContext context)
         {
-            var remoteData = await remoteCollectionsData.LoadAssetTaskAsync(context.LifeTime);
+            var remoteData = await remoteCollectionsData.LoadAssetTaskAsync(LifeTime);
             var authService = await context.ReceiveFirstAsync<IAuthorizationService>();
 
-            _remoteObjectsProvider = new RemoteCollectionsMap(remoteData, new FirebaseRemoteObjectFactory(), remoteObjectsFactory);
+            _remoteObjectsProvider = new RemoteCollectionsMap(remoteData, new FirebaseRemoteObjectFactory(), remoteObjectFactory);
 
             var remoteService = new FirebaseRemoteService(authService, _remoteObjectsProvider);
             
             context.Publish<IRemoteObjects>(remoteService);
+            
             return remoteService;
         }
 
@@ -65,47 +59,11 @@ namespace UniModules.UniGame.RemoteData.Runtime.RemoteManager.FirebaseRemote
             }
             remoteCollectionsData = new AssetReferenceT<RemoteCollectionsData>(remoteCollections.GetGUID());
             this.MarkDirty();
+            
+            if(remoteObjectFactory is IVerifiable verifiable)
+                verifiable.Verify();
 #endif
 
         }
-    }
-
-
-    public class FirebaseRemoteService : GameService , IFirebaseRemoteDataService
-    {
-        private readonly IAuthorizationService _authorizationService;
-        private readonly IRemoteObjects _remoteObjectsProvider;
-
-        public FirebaseRemoteService(IAuthorizationService authorizationService, IRemoteObjects remoteObjectsProvider)
-        {
-            _authorizationService = authorizationService;
-            _remoteObjectsProvider = remoteObjectsProvider;
-            
-            
-        }
-        
-        public IReadOnlyReactiveProperty<string> UserId => _authorizationService.UserId;
-        
-        public async UniTask<TWrapper> CreateRemoteObject<TWrapper, TValue>(string id, string path, Func<TValue> defaultValue = null)
-            where TWrapper : class, IReactiveRemoteObject<TValue> where TValue : class
-        {
-            return await _remoteObjectsProvider.CreateRemoteObject<TWrapper, TValue>(id, path, defaultValue);
-        }
-
-        public IRemoteObjectsProvider GetRemoteProvider(string id)
-        {
-            return _remoteObjectsProvider.GetRemoteProvider(id);
-        }
-
-        public async UniTask<RemoteObjectHandler<T>> GetHandler<T>(string id, string path)
-        {
-            return await _remoteObjectsProvider.GetHandler<T>(id, path);
-        }
-
-        public bool Validate(string collectionId)
-        {
-            return _remoteObjectsProvider.Validate(collectionId);
-        }
-
     }
 }

@@ -5,12 +5,13 @@ using Cysharp.Threading.Tasks;
 using UniModules.UniGame.RemoteData.MutableObject;
 using UniModules.UniGame.RemoteData.RemoteData;
 using UniModules.UniGame.RemoteData.Runtime.RemoteManager.Abstract;
+using UniModules.UniGame.UniGame;
 using UnityEngine;
 
 namespace UniModules.UniGame.RemoteData.Runtime.RemoteManager
 {
     [Serializable]
-    public class ReactiveRemoteObjectFactory : IReactiveRemoteObjectFactory
+    public class ReactiveRemoteObjectFactory : IReactiveRemoteObjectFactory, IVerifiable
     {
 #if ODIN_INSPECTOR
         [Sirenix.OdinInspector.InlineProperty]
@@ -19,6 +20,9 @@ namespace UniModules.UniGame.RemoteData.Runtime.RemoteManager
         public DefaultRemoteObjectFactory defaultFactory = new DefaultRemoteObjectFactory();
         
         [SerializeReference]
+#if ODIN_INSPECTOR
+        [Sirenix.OdinInspector.InlineProperty]
+#endif
         public List<ISerializableRemoteFactory> factories = new List<ISerializableRemoteFactory>();
 
         public async UniTask<IReactiveRemoteObject<T>> Create<T>(IRemoteObjectHandler<T> dataHandler) 
@@ -49,6 +53,16 @@ namespace UniModules.UniGame.RemoteData.Runtime.RemoteManager
             }
 
             return result;
+        }
+
+        public void Verify()
+        {
+            defaultFactory?.Verify();
+            foreach (var factory in factories)
+            {
+                if(factory is IVerifiable verifiable)
+                    verifiable.Verify();
+            }
         }
     }
 }
