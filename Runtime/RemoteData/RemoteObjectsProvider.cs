@@ -4,8 +4,7 @@ using UniModules.UniGame.Core.Runtime.DataFlow.Interfaces;
 namespace UniModules.UniGame.RemoteData.RemoteData
 {
 
-    public abstract class RemoteObjectsProvider : 
-        IRemoteObjectsProvider
+    public abstract class RemoteObjectsProvider : IRemoteObjectsProvider
     {
         public const char PathDelimeter = '.';
 
