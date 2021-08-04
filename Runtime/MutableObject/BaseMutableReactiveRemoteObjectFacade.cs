@@ -13,7 +13,8 @@ namespace UniModules.UniGame.RemoteData.MutableObject
     using UniTask = Cysharp.Threading.Tasks.UniTask;
 
     public class BaseMutableReactiveRemoteObjectFacade<T> : 
-        IReactiveRemoteObject<T> where T : class
+        IReactiveRemoteObject<T>, 
+        IReactiveParentRemoteObject where T : class
     {
         private ConcurrentStack<RemoteDataChange> _pendingChanges = new ConcurrentStack<RemoteDataChange>();
         private Dictionary<string, INotifyable> _properties = new Dictionary<string, INotifyable>(8);

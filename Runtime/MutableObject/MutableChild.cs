@@ -7,6 +7,7 @@
     using RemoteData;
     using UniRx;
 
+    
     public class MutableChild<T> : IMutableChild<T>
     {
         private const string PathFormat = "{0}{1}";
