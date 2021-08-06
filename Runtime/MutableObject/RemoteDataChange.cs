@@ -1,8 +1,7 @@
-﻿namespace UniModules.UniGame.RemoteData.MutableObject
+﻿namespace UniModules.UniGame.RemoteData
 {
     using System;
     using UniModules.UniCore.Runtime.ObjectPool.Runtime;
-    using UniModules.UniGame.RemoteData.RemoteData;
 
     public class RemoteDataChange : IDisposable
     {

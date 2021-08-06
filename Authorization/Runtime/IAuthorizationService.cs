@@ -1,7 +1,7 @@
 ﻿using UniModules.UniGameFlow.GameFlow.Runtime.Interfaces;
 using UniRx;
 
-namespace UniModules.UniGame.RemoteData.Runtime.RemoteManager.Abstract
+namespace UniModules.UniGame.Authorization
 {
     public interface IAuthorizationService : IGameService
     {

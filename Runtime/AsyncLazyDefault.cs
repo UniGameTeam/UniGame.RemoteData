@@ -1,6 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 
-namespace UniModules.UniGame.RemoteData.Runtime.RemoteManager
+namespace UniModules.UniGame.RemoteData
 {
     public class AsyncLazyDefault<TValue>
     {

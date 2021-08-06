@@ -5,7 +5,7 @@ using CodeWriter.Editor.UnityTools;
 using RemoteData.Editor.Generator.Abstract;
 using RemoteData.Editor.Generator.Binders;
 using UniModules.UniCore.Runtime.ReflectionUtils;
-using UniModules.UniGame.RemoteData.MutableObject;
+using UniModules.UniGame.RemoteData;
 using UnityEngine;
 
 namespace RemoteData.Editor.Generator

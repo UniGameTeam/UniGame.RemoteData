@@ -1,9 +1,21 @@
 {
     "name": "RemoteDataModule",
+    "rootNamespace": "",
     "references": [
-        "UniRx",
+        "unigame.contextdata.runtime",
+        "unigame.unieditortools",
+        "unigame.contextdata.services.runtime",
+        "unigame.serializablecontext.runtime",
+        "unigame.gamesystem.runtime",
+        "unigame.remoteda.authorization",
+        "unigame.addressables.tools.runtime",
         "unigame.unicore.runtime",
-        "UniTask"
+        "UniTask",
+        "UniRx",
+        "UniTask.Addressables",
+        "Unity.Addressables",
+        "Unity.ResourceManager",
+        "ZString"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -6,26 +6,26 @@ namespace UniGame.RemoteData.FirebaseModule
 
     [InlineProperty]
     [Serializable]
-    [ValueDropdown("@UniGame.RemoteData.FirebaseModule.FirebaseEditorData.GetCollectionsId()")]
-    public struct FirebaseCollectionId
+    [ValueDropdown("@UniGame.RemoteData.RemoteEditorData.GetCollectionsId()")]
+    public struct RemoteCollectionId
     {
         [SerializeField, HideInInspector] private string _value;
 
-        public static implicit operator string(FirebaseCollectionId v)
+        public static implicit operator string(RemoteCollectionId v)
         {
             return v._value;
         }
 
-        public static explicit operator FirebaseCollectionId(string v)
+        public static explicit operator RemoteCollectionId(string v)
         {
-            return new FirebaseCollectionId() {_value = v};
+            return new RemoteCollectionId() {_value = v};
         }
 
         public override string ToString() => _value;
 
         public override int GetHashCode() => _value.GetHashCode();
 
-        public FirebaseCollectionId FromString(string value)
+        public RemoteCollectionId FromString(string value)
         {
             _value = value;
             return this;
@@ -33,9 +33,9 @@ namespace UniGame.RemoteData.FirebaseModule
 
         public override bool Equals(object obj)
         {
-            if (!(obj is FirebaseCollectionId _))
+            if (!(obj is RemoteCollectionId _))
                 return false;
-            return _value.Equals(((FirebaseCollectionId) obj)._value);
+            return _value.Equals(((RemoteCollectionId) obj)._value);
         }
     }
 }

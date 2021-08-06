@@ -2,11 +2,12 @@ using System;
 using Cysharp.Threading.Tasks;
 using Firebase.Auth;
 using UniGame.UniNodes.GameFlow.Runtime;
-using UniModules.UniGame.RemoteData.Runtime.RemoteManager.Abstract;
+using UniModules.UniGame.RemoteData;
+using UniModules.UniGame.Authorization;
 using UniRx;
 using UnityEngine;
 
-namespace UniModules.UniGame.RemoteData.Runtime.RemoteManager.FirebaseRemote
+namespace UniModules.UniGame.RemoteData
 {
     public class FirebaseAuthService : GameService, IAuthorizationService
     {

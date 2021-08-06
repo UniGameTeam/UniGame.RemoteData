@@ -4,7 +4,7 @@ using System.Linq;
 using Firebase.Firestore;
 using UniModules.UniCore.Runtime.ReflectionUtils;
 using UniModules.UniCore.Runtime.Utils;
-using UniModules.UniGame.RemoteData.MutableObject;
+using UniModules.UniGame.RemoteData;
 
 public static class ReactiveRemoteDataTool
 {

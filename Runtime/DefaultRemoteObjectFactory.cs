@@ -1,13 +1,13 @@
 using UniModules.UniGame.UniGame;
 
-namespace UniModules.UniGame.RemoteData.Runtime.RemoteManager
+namespace UniModules.UniGame.RemoteData
 {
     using System;
     using Firebase.Firestore;
     using UniModules.UniCore.Runtime.ReflectionUtils;
     using UniModules.UniGame.Core.Runtime.DataStructure;
     using UniModules.UniGame.Core.Runtime.SerializableType;
-    using MutableObject;
+    using RemoteData;
     using UnityEngine;
     
     [Serializable]

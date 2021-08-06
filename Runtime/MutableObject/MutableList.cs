@@ -1,4 +1,4 @@
-﻿namespace UniModules.UniGame.RemoteData.MutableObject
+﻿namespace UniModules.UniGame.RemoteData
 {
     using System;
     using System.Collections;

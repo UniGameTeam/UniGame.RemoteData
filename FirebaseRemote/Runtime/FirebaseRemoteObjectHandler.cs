@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
-using Firebase.Firestore;
-using UniModules.UniCore.Runtime.ObjectPool.Runtime;
-using UniModules.UniCore.Runtime.ObjectPool.Runtime.Extensions;
-using UniModules.UniGame.RemoteData.MutableObject;
-using UniModules.UniGame.RemoteData.RemoteData;
+﻿
 
-namespace UniModules.UniGame.RemoteData.Runtime.RemoteManager.FirebaseRemote
+namespace UniModules.UniGame.RemoteData
 {
+    using System;
+    using System.Collections.Generic;
+    using Cysharp.Threading.Tasks;
+    using Firebase.Firestore;
+    using UniModules.UniCore.Runtime.ObjectPool.Runtime;
+    using UniModules.UniCore.Runtime.ObjectPool.Runtime.Extensions;
+    
     public class FirebaseRemoteObjectHandler<T> : RemoteObjectHandler<T>
     {
         private readonly DocumentReference _documentReference;

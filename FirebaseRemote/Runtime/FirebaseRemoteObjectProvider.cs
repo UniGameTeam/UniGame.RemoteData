@@ -1,19 +1,28 @@
-﻿using System;
-using Firebase.Firestore;
-using UniModules.UniGame.RemoteData.RemoteData;
+﻿using Cysharp.Threading.Tasks;
 
-namespace UniModules.UniGame.RemoteData.Runtime.RemoteManager.FirebaseRemote
+namespace UniModules.UniGame.RemoteData
 {
-    public class FirebaseRemoteObjectProvider : RemoteData.RemoteObjectsProvider
+    using System;
+    using Firebase.Firestore;
+    
+    
+    [Serializable]
+    public class FirebaseRemoteObjectProvider : RemoteObjectsProvider
     {
         
-        public override RemoteObjectHandler<T> GetRemoteObject<T>(string path)
+        public override UniTask<IRemoteObjectHandler<T>> GetRemoteObjectAsync<T>(string path)
         {
-            var reference = FirebaseFirestore.DefaultInstance.Document(path);
-            return new FirebaseRemoteObjectHandler<T>(reference);
+            var reference = FirebaseFirestore
+                .DefaultInstance
+                .Document(path);
+            return UniTask.FromResult<IRemoteObjectHandler<T>>(new FirebaseRemoteObjectHandler<T>(reference));
         }
 
         public override string GetIdForNewObject(string path) => throw new NotImplementedException();
-
+        
+        public override IRemoteObjectsProvider Create()
+        {
+            return new FirebaseRemoteObjectProvider();
+        }
     }
 }

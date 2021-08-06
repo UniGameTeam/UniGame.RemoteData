@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace UniModules.UniGame.RemoteData.Runtime.RemoteManager
+namespace UniModules.UniGame.Authorization
 {
     public struct AuthorizationResult
     {

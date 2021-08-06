@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UniModules.UniGame.Core.Runtime.Common;
-using UniModules.UniGame.RemoteData.MutableObject;
 
 namespace UniModules.UniGame.RemoteData
 {
@@ -21,6 +20,7 @@ namespace UniModules.UniGame.RemoteData
         UniTask ClearData();
         
         void ApplyChangeLocal(RemoteDataChange change);
+
         string GetDataId();
         string GetFullPath();
     }

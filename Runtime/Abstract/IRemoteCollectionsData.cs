@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using UniModules.UniGame.RemoteData;
 
-namespace UniModules.UniGame.RemoteData.Runtime.RemoteManager.Abstract
+namespace UniModules.UniGame.RemoteData
 {
     public interface IRemoteCollectionsData
     {

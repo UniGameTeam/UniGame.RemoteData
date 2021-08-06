@@ -1,11 +1,8 @@
-﻿using System;
-using Cysharp.Threading.Tasks;
-using UniModules.UniGame.RemoteData.MutableObject;
-using UniModules.UniGame.RemoteData.RemoteData;
-using UniModules.UniGame.RemoteData.Runtime.RemoteManager.Abstract;
-
-namespace UniModules.UniGame.RemoteData.Runtime.RemoteManager
+﻿
+namespace UniModules.UniGame.RemoteData
 {
+    using System;
+    using Cysharp.Threading.Tasks;
 
     [Serializable]
     public abstract class ReactiveItemFactory : IReactiveItemFactory

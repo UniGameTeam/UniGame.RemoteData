@@ -1,13 +1,12 @@
 ﻿using UniModules.UniCore.Runtime.ObjectPool.Runtime.Extensions;
 
-namespace UniModules.UniGame.RemoteData.MutableObject
+namespace UniModules.UniGame.RemoteData
 {
     using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using RemoteData;
     using UniCore.Runtime.ObjectPool.Runtime;
     using UniRx;
     using UniTask = Cysharp.Threading.Tasks.UniTask;
@@ -38,7 +37,8 @@ namespace UniModules.UniGame.RemoteData.MutableObject
         /// <returns></returns>
         public async UniTask LoadRootData(Func<T> initialDataProvider = null)
         {
-            await _objectHandler.LoadData(initialDataProvider);
+            //TODO RETURN VALUE
+            var result = await _objectHandler.LoadData(initialDataProvider);
             AllPropertiesChanged();
         }
 

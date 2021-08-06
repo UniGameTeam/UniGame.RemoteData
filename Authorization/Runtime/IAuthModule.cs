@@ -1,7 +1,7 @@
-﻿namespace UniModules.UniGame.RemoteData.Authorization
-{
-    using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
+namespace UniModules.UniGame.Authorization
+{
     public interface IAuthModule
     {
         // TO DO other Auth Type

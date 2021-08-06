@@ -1,4 +1,4 @@
-﻿namespace UniModules.UniGame.RemoteData.MutableObject
+﻿namespace UniModules.UniGame.RemoteData
 {
     /// <summary>
     /// TODO can we delete?

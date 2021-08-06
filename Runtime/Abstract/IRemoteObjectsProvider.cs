@@ -1,13 +1,10 @@
-﻿using System;
-using UniModules.UniGame.Core.Runtime.Interfaces;
+﻿using Cysharp.Threading.Tasks;
 
 namespace UniModules.UniGame.RemoteData
 {
-    public interface IRemoteObjectsProvider : 
-        ILifeTimeContext,
-        IDisposable
+    public interface IRemoteObjectsProvider
     {
-        RemoteObjectHandler<T> GetRemoteObject<T>(string path);
+        UniTask<IRemoteObjectHandler<T>> GetRemoteObjectAsync<T>(string path);
         
         string GetIdForNewObject(string path);
     }

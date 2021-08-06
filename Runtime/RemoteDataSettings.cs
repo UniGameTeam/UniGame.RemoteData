@@ -1,21 +1,28 @@
 using System.Collections.Generic;
 using System.Linq;
-using UniModules.UniGame.RemoteData.Runtime.RemoteManager.Abstract;
+using UniModules.UniGame.UniGame;
 using UnityEngine;
 
-namespace UniModules.UniGame.RemoteData.Runtime.RemoteManager
+namespace UniModules.UniGame.RemoteData
 {
-    [CreateAssetMenu(menuName = "UniGame/RemoteData/RemoteCollections",fileName = nameof(RemoteCollectionsData))]
+    [CreateAssetMenu(menuName = "UniGame/RemoteData/RemoteCollections",fileName = nameof(RemoteDataSettings))]
 #if ODIN_INSPECTOR
     [Sirenix.OdinInspector.InlineEditor]
 #endif
-    public class RemoteCollectionsData : ScriptableObject, IRemoteCollectionsData
+    public class RemoteDataSettings : ScriptableObject, IRemoteCollectionsData,IVerifiable
     {
 
 #if ODIN_INSPECTOR
         [Sirenix.OdinInspector.InlineProperty]
 #endif
         public List<RemoteCollectionsInfo> remoteCollections = new List<RemoteCollectionsInfo>();
+        
+        [SerializeReference] 
+        public RemoteObjectsProvider defaultObjectsProvider;
+        
+        [SerializeReference]
+        public IReactiveRemoteObjectFactory reactiveObjectsFactory = new ReactiveRemoteObjectFactory();
+
         
         public IEnumerable<string> CollectionsIds
         {
@@ -31,5 +38,12 @@ namespace UniModules.UniGame.RemoteData.Runtime.RemoteManager
         public IEnumerable<RemoteCollectionsInfo> CollectionsInfo => remoteCollections;
 
         public RemoteCollectionsInfo GetRemoteCollection(string id) => remoteCollections.FirstOrDefault(x => x.collectionId == id);
+        
+        
+        public void Verify()
+        {
+            if(reactiveObjectsFactory is IVerifiable verifiableFactory)
+                verifiableFactory.Verify();
+        }
     }
 }

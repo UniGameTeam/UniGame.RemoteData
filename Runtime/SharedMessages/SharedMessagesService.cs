@@ -1,11 +1,12 @@
-﻿namespace UniModules.UniGame.RemoteData.SharedMessages
+﻿using UniModules.UniGame.Authorization;
+
+namespace UniModules.UniGame.RemoteData.SharedMessages
 {
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using Authorization;
     using MessageData;
-    using MutableObject;
+    using RemoteData;
     using UnityEngine;
 
     public class SharedMessagesService

@@ -1,4 +1,4 @@
-namespace UniModules.UniGame.RemoteData.MutableObject
+namespace UniModules.UniGame.RemoteData
 {
     using System;
     using System.Collections.Generic;
@@ -9,6 +9,8 @@ namespace UniModules.UniGame.RemoteData.MutableObject
         
         void   UpdateChildData(string childName, object newData);
 
+        string GetChildPath(string objectName);
+        
         /// <summary>
         /// Возвращает список всех локальных изменений и обнуляет его внутри объекта
         /// применимо для работы с BatchUpdater
