@@ -6,18 +6,10 @@ namespace UniModules.UniGame.RemoteData.Runtime.RemoteManager.FirebaseRemote
 {
     public class FirebaseRemoteObjectProvider : RemoteData.RemoteObjectsProvider
     {
-        private string _collectionId;
-
-        public FirebaseRemoteObjectProvider(string collectionId)
-        {
-            _collectionId = collectionId;
-        }
         
         public override RemoteObjectHandler<T> GetRemoteObject<T>(string path)
         {
-            var reference = FirebaseFirestore.DefaultInstance
-                .Collection(_collectionId)
-                .Document(path);
+            var reference = FirebaseFirestore.DefaultInstance.Document(path);
             return new FirebaseRemoteObjectHandler<T>(reference);
         }
 

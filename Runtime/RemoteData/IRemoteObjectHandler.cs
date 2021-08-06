@@ -4,12 +4,10 @@ using Cysharp.Threading.Tasks;
 using UniModules.UniGame.Core.Runtime.Common;
 using UniModules.UniGame.RemoteData.MutableObject;
 
-namespace UniModules.UniGame.RemoteData.RemoteData
+namespace UniModules.UniGame.RemoteData
 {
     public interface IRemoteObjectHandler<T> : IDisposableLifetimeContext
     {
-        object DeleteValueObject { get; }
-        
         T Object { get; }
         
         UniTask<RemoteObjectHandler<T>> LoadData(Func<T> initialDataProvider = null);

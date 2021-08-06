@@ -1,28 +1,30 @@
-﻿using UniModules.UniGame.Core.Runtime.Common;
-
-namespace UniModules.UniGame.RemoteData.RemoteData
+﻿namespace UniModules.UniGame.RemoteData
 {
     using System;
     using System.Collections.Generic;
     using System.Reflection;
     using Core.Runtime.DataFlow.Interfaces;
-    using Core.Runtime.Interfaces;
     using Cysharp.Threading.Tasks;
     using MutableObject;
     using UniCore.Runtime.DataFlow;
 
     public abstract class RemoteObjectHandler<T> : IRemoteObjectHandler<T>
     {
+        #region static data
+
+        private static Dictionary<string, FieldInfo> _fieldInfoCache = new Dictionary<string, FieldInfo>();
+        private static Dictionary<string, PropertyInfo> _propertyInfoCache = new Dictionary<string, PropertyInfo>();
+
+        #endregion
+
+        private LifeTimeDefinition _lifeTime = new LifeTimeDefinition();
+
         public object DeleteValueObject { get; }
-        
+
         public T Object { get; protected set; }
 
         public ILifeTime LifeTime => _lifeTime;
 
-        private LifeTimeDefinition _lifeTime = new LifeTimeDefinition();
-
-        private static Dictionary<string, FieldInfo> _fieldInfoCache = new Dictionary<string, FieldInfo>();
-        private static Dictionary<string, PropertyInfo> _propertyInfoCache = new Dictionary<string, PropertyInfo>();
 
         public RemoteObjectHandler(object deleteValueObject)
         {
@@ -81,7 +83,7 @@ namespace UniModules.UniGame.RemoteData.RemoteData
         }
 
         #region abstract methods
-        
+
         public abstract string GetDataId();
 
         public abstract string GetFullPath();
@@ -89,7 +91,7 @@ namespace UniModules.UniGame.RemoteData.RemoteData
         protected abstract UniTask ApplyChangeRemote(RemoteDataChange change);
 
         public abstract UniTask ClearData();
-        
+
         #endregion
     }
 }

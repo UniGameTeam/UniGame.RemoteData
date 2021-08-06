@@ -1,9 +1,8 @@
-using UniModules.UniGame.RemoteData.RemoteData;
-using UniModules.UniGame.RemoteData.Runtime.RemoteManager.Abstract;
-
 namespace UniModules.UniGame.RemoteData.Runtime.RemoteManager.FirebaseRemote
 {
-    
+    using RemoteData;
+    using Abstract;
+
     public class FirebaseRemoteObjectFactory : IRemoteObjectFactory
     {
 

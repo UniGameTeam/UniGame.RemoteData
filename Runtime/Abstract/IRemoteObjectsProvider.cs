@@ -1,7 +1,7 @@
 ﻿using System;
 using UniModules.UniGame.Core.Runtime.Interfaces;
 
-namespace UniModules.UniGame.RemoteData.RemoteData
+namespace UniModules.UniGame.RemoteData
 {
     public interface IRemoteObjectsProvider : 
         ILifeTimeContext,

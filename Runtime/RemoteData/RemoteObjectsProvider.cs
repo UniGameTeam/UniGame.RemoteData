@@ -1,7 +1,7 @@
 ﻿using UniModules.UniCore.Runtime.DataFlow;
 using UniModules.UniGame.Core.Runtime.DataFlow.Interfaces;
 
-namespace UniModules.UniGame.RemoteData.RemoteData
+namespace UniModules.UniGame.RemoteData
 {
 
     public abstract class RemoteObjectsProvider : IRemoteObjectsProvider
