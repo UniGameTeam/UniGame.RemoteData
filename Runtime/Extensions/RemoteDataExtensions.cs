@@ -46,11 +46,17 @@ namespace UniModules.UniGame.RemoteData
             return child;
         }
 
+        public static string CombineRemoteDataPath(this string collectionId, string path)
+        {
+            var id     = collectionId;
+            var result = ZString.Join(PathSeparator,id,path);
+            return result;
+        }
+        
         public static string CombinePath(this RemoteCollectionId collectionId, string path)
         {
             var id = (string)collectionId;
-            var result = ZString.Join(PathSeparator,id,path);
-            return result;
+            return CombineRemoteDataPath(id,path);
         }
     }
 
