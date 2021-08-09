@@ -33,29 +33,16 @@ namespace UniModules.UniGame.RemoteData
         #endregion
         
         private readonly IRemoteObjectsProvider _defaultObjectsProvider;
-        private readonly IReactiveRemoteObjectFactory _reactiveRemoteObjectFactory;
         private readonly LifeTimeDefinition _lifeTime = new LifeTimeDefinition();
         private readonly Dictionary<string,IRemoteObjectsProvider> _objectsProviders = new Dictionary<string, IRemoteObjectsProvider>(16);
 
-        public RemoteObjectsMap(
-            IRemoteObjectsProvider defaultObjectsProvider,
-            IReactiveRemoteObjectFactory reactiveRemoteObjectFactory)
+        public RemoteObjectsMap(IRemoteObjectsProvider defaultObjectsProvider)
         {
             _defaultObjectsProvider = defaultObjectsProvider;
-            _reactiveRemoteObjectFactory = reactiveRemoteObjectFactory;
             _lifeTime.AddCleanUpAction(_objectsProviders.Clear);
         }
 
         public ILifeTime LifeTime => _lifeTime;
-
-        public async UniTask<TWrapper> CreateRemoteObject<TWrapper,TValue>(string path, Func<TValue> defaultValue = null)
-            where TWrapper :class, IReactiveRemoteObject<TValue> 
-            where TValue : class
-        {
-            var dataHandler = await GetHandler<TValue>(path);
-            var reactiveObject = await _reactiveRemoteObjectFactory.Create(dataHandler,defaultValue);
-            return reactiveObject as TWrapper;
-        }
 
         public IRemoteObjects RegisterRemoteProvider(string path, IRemoteObjectsProvider provider)
         {

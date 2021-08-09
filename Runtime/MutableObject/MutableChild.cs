@@ -14,10 +14,10 @@
         private static Dictionary<string, FieldInfo> _fieldInfoCache = new Dictionary<string, FieldInfo>(8);
         private static Dictionary<string, PropertyInfo> _propertyInfoCache = new Dictionary<string, PropertyInfo>(8);
         
-        private readonly Dictionary<string, INotifyable> _properties = new Dictionary<string, INotifyable>(8);
-        private readonly Dictionary<string, IMutableChildBase> _childObjects = new Dictionary<string, IMutableChildBase>(8);
+        private readonly Dictionary<string, INotifyable>           _properties   = new Dictionary<string, INotifyable>(8);
+        private readonly Dictionary<string, IRemoteChangesStorage> _childObjects = new Dictionary<string, IRemoteChangesStorage>(8);
 
-        private Func<T> _getter;
+        private Func<T> _getter;    
         protected IRemoteChangesStorage _storage;
         
 

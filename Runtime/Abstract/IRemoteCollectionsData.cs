@@ -8,7 +8,5 @@ namespace UniModules.UniGame.RemoteData
         IEnumerable<string> CollectionsIds { get; }
         IEnumerable<RemoteCollectionsInfo> CollectionsInfo { get; }
 
-        public RemoteCollectionsInfo GetRemoteCollection(string id);
-
     }
 }

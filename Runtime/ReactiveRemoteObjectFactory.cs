@@ -20,7 +20,7 @@ namespace UniModules.UniGame.RemoteData
 #if ODIN_INSPECTOR
         [Sirenix.OdinInspector.InlineProperty]
 #endif
-        public List<ISerializableRemoteFactory> factories = new List<ISerializableRemoteFactory>();
+        public List<IReactiveItemFactory> factories = new List<IReactiveItemFactory>();
 
         public async UniTask<IReactiveRemoteObject<T>> Create<T>(IRemoteObjectHandler<T> dataHandler) 
             where T : class

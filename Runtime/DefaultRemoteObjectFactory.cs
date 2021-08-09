@@ -4,10 +4,9 @@ namespace UniModules.UniGame.RemoteData
 {
     using System;
     using Firebase.Firestore;
-    using UniModules.UniCore.Runtime.ReflectionUtils;
-    using UniModules.UniGame.Core.Runtime.DataStructure;
-    using UniModules.UniGame.Core.Runtime.SerializableType;
-    using RemoteData;
+    using UniCore.Runtime.ReflectionUtils;
+    using Core.Runtime.DataStructure;
+    using Core.Runtime.SerializableType;
     using UnityEngine;
     
     [Serializable]

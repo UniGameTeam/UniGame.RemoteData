@@ -30,8 +30,8 @@ namespace UniModules.UniGame.RemoteData
             
             var reactiveObjectsFactory = remoteData.reactiveObjectsFactory;
             var defaultObjectsProvider = remoteData.defaultObjectsProvider.Create();
-            var remoteObjects = new RemoteObjectsMap(defaultObjectsProvider, reactiveObjectsFactory);
-            var remoteService = new RemoteDataService(authService,remoteObjects);
+            var remoteObjects = new RemoteObjectsMap(defaultObjectsProvider);
+            var remoteService = new RemoteDataService(authService,reactiveObjectsFactory,remoteObjects);
 
             context.Publish<IRemoteObjects>(remoteService);
             

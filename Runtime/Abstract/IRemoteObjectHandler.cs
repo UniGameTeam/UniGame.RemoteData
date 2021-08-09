@@ -22,6 +22,7 @@ namespace UniModules.UniGame.RemoteData
         void ApplyChangeLocal(RemoteDataChange change);
 
         string GetDataId();
+        
         string GetFullPath();
     }
 }

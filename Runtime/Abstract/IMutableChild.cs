@@ -2,7 +2,7 @@
 
 namespace UniModules.UniGame.RemoteData
 {
-    public interface IMutableChild<T> : IMutableChildBase
+    public interface IMutableChild<T> : IRemoteChangesStorage
     {
         string FullPath { get; }
         

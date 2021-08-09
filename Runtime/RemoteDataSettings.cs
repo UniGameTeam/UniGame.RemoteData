@@ -37,9 +37,6 @@ namespace UniModules.UniGame.RemoteData
 
         public IEnumerable<RemoteCollectionsInfo> CollectionsInfo => remoteCollections;
 
-        public RemoteCollectionsInfo GetRemoteCollection(string id) => remoteCollections.FirstOrDefault(x => x.collectionId == id);
-        
-        
         public void Verify()
         {
             if(reactiveObjectsFactory is IVerifiable verifiableFactory)
