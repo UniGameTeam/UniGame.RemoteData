@@ -3,6 +3,7 @@ using UnityEditor;
 
 namespace UniModules.UniGame.RemoteData
 {
+    using System;
     using RemoteData;
 
     public class PlayerPrefsRemoteObjectProvider : RemoteObjectsProvider
@@ -12,7 +13,7 @@ namespace UniModules.UniGame.RemoteData
             return UniTask.FromResult<IRemoteObjectHandler<T>>(new PlayerPrefsRemoteObjectHandler<T>(path));
         }
 
-        public override string GetIdForNewObject(string path) => GUID.Generate().ToString();
+        public override string GetIdForNewObject(string path) => Guid.NewGuid().ToString();
 
         public override IRemoteObjectsProvider Create() => new PlayerPrefsRemoteObjectProvider();
     }
