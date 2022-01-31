@@ -1,6 +1,7 @@
 
 
-using UniModules.UniGame.CoreModules.UniGame.AddressableTools.Runtime.Extensions;
+using UniModules.UniGame.AddressableTools.Runtime.Extensions;
+using UniModules.UniGame.SerializableContext.Runtime.Addressables;
 
 namespace UniModules.UniGame.RemoteData
 {
