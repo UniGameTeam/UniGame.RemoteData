@@ -1,4 +1,6 @@
-﻿namespace UniModules.UniGame.RemoteData
+﻿using UniModules.UniCore.Runtime.ObjectPool.Runtime.Extensions;
+
+namespace UniModules.UniGame.RemoteData
 {
     using System;
     using UniModules.UniCore.Runtime.ObjectPool.Runtime;
@@ -10,14 +12,12 @@
         public object FieldValue;
         public Action<RemoteDataChange> ApplyCallback;
 
-        protected RemoteDataChange() { }
-
         public static RemoteDataChange Create(string FullPath,
                                                     string FieldName,
                                                     object FieldValue,
                                                     Action<RemoteDataChange> ApplyCallback)
         {
-            var change = ClassPool.SpawnOrCreate(() => new RemoteDataChange());
+            var change = ClassPool.Spawn<RemoteDataChange>();
             change.FullPath = FullPath.Trim(RemoteObjectsProvider.PathDelimeter);
             change.FieldName = FieldName;
             change.FieldValue = FieldValue;
@@ -25,10 +25,7 @@
             return change;
         }
 
-        public void Dispose()
-        {
-            ClassPool.Despawn(this, null);
-        }
+        public void Dispose() => this.DespawnClass();
 
     }
 }

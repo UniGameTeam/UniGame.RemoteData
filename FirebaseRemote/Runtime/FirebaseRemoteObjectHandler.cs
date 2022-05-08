@@ -52,12 +52,10 @@ namespace UniModules.UniGame.RemoteData
 
         public override async UniTask ApplyChangesBatched(List<RemoteDataChange> changes)
         {
-            var changesDictionary = ClassPool.SpawnOrCreate(() => new Dictionary<string, object>(changes.Count));
+            var changesDictionary = ClassPool.Spawn<Dictionary<string, object>>();
             foreach (var change in changes)
-            {
                 changesDictionary[change.FullPath] = change.FieldValue;
-            }
-
+            
             try
             {
                 await _documentReference.UpdateAsync(changesDictionary).AsUniTask();

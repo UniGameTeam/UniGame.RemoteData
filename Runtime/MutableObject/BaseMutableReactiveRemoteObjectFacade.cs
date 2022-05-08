@@ -66,7 +66,7 @@ namespace UniModules.UniGame.RemoteData
         /// <returns></returns>
         public async Task CommitChanges()
         {
-            var changes = ClassPool.SpawnOrCreate(()=>new List<RemoteDataChange>());
+            var changes = ClassPool.Spawn<List<RemoteDataChange>>();
 
             lock (_pendingChanges)
             {
